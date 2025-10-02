@@ -9,11 +9,16 @@ async function generateImageWithPollinations(prompt: string, styleValues: any): 
     // Create enhanced prompt based on style values
     const enhancedPrompt = createEnhancedPrompt(prompt, styleValues);
     
-    // Generate image using Pollinations.ai
+    // Add randomness to ensure different images on regenerate
+    const randomSeed = Math.floor(Math.random() * 1000000);
+    const randomVariation = Math.floor(Math.random() * 100);
+    
+    // Generate image using Pollinations.ai with randomness
     const encodedPrompt = encodeURIComponent(enhancedPrompt);
-    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=512&height=512&model=flux&enhance=true`;
+    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=512&height=512&model=flux&enhance=true&seed=${randomSeed}&nologo=true&private=true&variation=${randomVariation}`;
     
     console.log('Generating image with Pollinations.ai:', enhancedPrompt);
+    console.log('Using random seed:', randomSeed, 'variation:', randomVariation);
     
     // For now, return the Pollinations.ai URL directly (Firebase Storage will be added later)
     console.log('Generated image with Pollinations.ai:', imageUrl);
